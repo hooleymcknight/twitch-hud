@@ -1,0 +1,357 @@
+/* Self-hosted fonts for twitch hud
+   Latin subset only, tff only. Source: Fontsource (Google Fonts, OFL). */
+
+   /** ========= Dynalight ========= **/
+
+@font-face {
+  font-family: 'Orbitron';
+  font-style: normal;
+  font-display: swap;
+  src: url('./assets/fonts/Orbitron-VariableFont_wght.ttf') format('truetype');
+}
+
+html, body {
+    background: transparent;
+}
+
+.hidden {
+    display: none !important;
+}
+.invisible {
+    visibility: hidden !important;
+}
+
+input,
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  color: #0f0f0f;
+  background-color: #ffffff;
+  transition: border-color 0.25s;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+}
+
+button, select, select option {
+  cursor: pointer;
+}
+
+/* select option:hover {
+    background-color: #396cd8;
+} */
+
+button:hover {
+  border-color: #396cd8;
+}
+button:active {
+  border-color: #396cd8;
+  background-color: #e8e8e8;
+}
+
+input,
+button {
+  outline: none;
+}
+
+/** twitch chat **/
+
+b {
+    font-weight: 700;
+}
+
+.twitch-chat {
+    position: relative;
+    padding: 40px;
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+
+    overflow: hidden;
+    height: calc(40svh + 80px);
+
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0, white 10%);
+    mask-image: linear-gradient(to bottom, transparent 0, white 10%);
+}
+
+.chat-rows {
+    /* overflow: hidden;
+    height: calc(40svh + 80px); */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.twitch-chat .row {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.row b {
+    text-align: left;
+    margin-right: 16px;
+    margin-bottom: 0;
+    word-wrap: break-word;
+    display: block;
+}
+.row p {
+    text-align: right;
+    line-height: 1.15;
+    word-wrap: break-word;
+    text-overflow: ellipsis;
+    width: 90%;
+    margin: 0 0 0 auto;
+}
+
+.row b,
+.row p {
+    font-family: 'Orbitron', Helvetica, Arial, sans-serif;
+    font-size: 24px;
+}
+
+button#clear {
+    display: block;
+    cursor: pointer;
+    margin: 0 0 20px auto;
+    position: absolute;
+    z-index: 2;
+    top: 40px;
+    right: 20px;
+}
+
+/** drag and drop **/
+
+.movable-locked {
+    border: 2px solid transparent;
+}
+
+.movable {
+    border: 2px solid #fff;
+    box-shadow: -10px 5px 8px 5px #111;
+}
+
+/** add widget **/
+
+#widget-options {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    margin-top: 30px;
+}
+
+#add-widget {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#add-widget button#add-button {
+    width: fit-content;
+    padding: 20px;
+    line-height: 1;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: 2px solid #38b3ff;
+}
+
+#add-widget svg {
+    width: 100px;
+    height: 100px;
+    fill: #38b3ff;
+}
+
+#widget-selector {
+    font-size: 24px;
+    margin-top: 20px;
+}
+
+/** edit widget **/
+
+button.edit {
+    position: relative;
+    /* right: 10px;
+    top: -50px; */
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+button.edit svg {
+    fill: #535bf2;
+    width: 20px;
+    height: 20px;
+    margin: 0;
+    padding: 0;
+}
+
+button.edit.delete {
+    background-color: #6e2222;
+}
+button.edit.delete svg {
+    fill: #fff;
+}
+button.edit.delete:hover {
+    border-color: #5f0000;
+    background-color: #5f0000;
+}
+
+/** list **/
+
+ul li {
+    margin-bottom: 6px;
+}
+
+/** edit buttons **/
+
+.edit-buttons {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.edit {
+    margin-right: 0;
+    margin-left: 10px;
+    display: block;
+    margin-bottom: 20px;
+}
+
+.edit + textarea {
+    display: block;
+    width: 100%;
+    font-size: 18px;
+    min-height: 200px;
+}
+
+.twitch-chat {
+    background: rgba(0, 0, 0, 0.9);
+}
+
+.content-box {
+    /* background: radial-gradient(rgba(0, 0, 0, 0.8) 0, rgba(0, 0, 0, 0.5) 70%, rgba(0, 0, 0, 0) 80%); */
+    background: rgba(0, 0, 0, 0.8);
+    padding: 20px 40px;
+}
+
+.content-box ul,
+.content-box ol {
+    text-align: left;
+    font-size: 20px;
+}
+
+.content-box p {
+    text-align: left;
+}
+
+/** default below **/
+
+.logo.vite:hover {
+  filter: drop-shadow(0 0 2em #747bff);
+}
+
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafb);
+}
+:root {
+    font-family: 'Orbitron', Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 400;
+
+    color: #38b3ff;
+    background-color: #375C73;
+    background: radial-gradient(circle, rgba(55, 92, 115, 0.0) 0%, rgba(55, 92, 115, 0.05) 85%, rgba(55, 92, 115, 0.5) 100%);
+    background-size: stretch;
+    background-repeat: no-repeat;
+    background-position: center center;
+    height: 100%;
+
+
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-text-size-adjust: 100%;
+}
+
+.container {
+  margin: 0;
+  padding-top: 10vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: 0.75s;
+}
+
+.logo.tauri:hover {
+  filter: drop-shadow(0 0 2em #24c8db);
+}
+
+.row {
+  display: flex;
+  justify-content: center;
+}
+
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+
+a:hover {
+  color: #535bf2;
+}
+
+h1 {
+  text-align: center;
+  font-family: 'Orbitron', Helvetica, Arial, sans-serif;
+  font-size: 48px;
+}
+
+
+
+#greet-input {
+  margin-right: 5px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color: #f6f6f6;
+    background-color: #2f2f2f;
+  }
+
+  a:hover {
+    color: #24c8db;
+  }
+
+  input,
+  button {
+    color: #ffffff;
+    background-color: #0f0f0f98;
+  }
+  button:active {
+    background-color: #0f0f0f69;
+  }
+}
+
+
