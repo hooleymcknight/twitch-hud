@@ -256,6 +256,33 @@ ul li {
     text-align: left;
 }
 
+.delete-confirmation {
+    position: absolute;
+    background: #cecece;
+    color: black;
+    border-radius: 5px;
+    padding: 10px;
+    z-index: 20;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    justify-content: center;
+}
+.movable-locked .delete-confirmation {
+    display: none;
+}
+
+.delete-confirmation button {
+    margin: 5px;
+}
+
+.delete-confirmation button.delete {
+    color: #fff;
+}
+
 /** default below **/
 
 .logo.vite:hover {

@@ -34,6 +34,16 @@ function App() {
         setWidgets(newWidgets);
     }
 
+    const deleteWidget = async (id: string) => {
+        const store = await load('settings.json');
+        const currentWidgets = await store.get<Widget[]>('widgets') || [];
+
+        const remainingWidgets = currentWidgets.filter(x => x.id !== id);
+        await store.set('widgets', remainingWidgets);
+
+        setWidgets(remainingWidgets);
+    }
+
     const updateSettingsAddWidget = async (widget: string) => {
         const newWidgets = await addWidget(widget);
         setWidgets(newWidgets);
@@ -75,9 +85,9 @@ function App() {
             {
                 widgets.map(x => 
                     x.type === 'chat' ? 
-                        <Chat clickThrough={clickThrough} id={x.id} show={x.show} key={x.id} />
+                        <Chat clickThrough={clickThrough} id={x.id} show={x.show} key={x.id} updateShowSettings={updateShowSettings} />
                     : x.type === 'content' ?
-                        <Content clickThrough={clickThrough} id={x.id} show={x.show} key={x.id} startContent={x.content} updateShowSettings={updateShowSettings} />
+                        <Content clickThrough={clickThrough} id={x.id} show={x.show} key={x.id} startContent={x.content} updateShowSettings={updateShowSettings} onConfirmDelete={deleteWidget} />
                     : ''
                 )
             }
