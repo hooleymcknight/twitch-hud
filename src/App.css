@@ -77,6 +77,11 @@ b {
     mask-image: linear-gradient(to bottom, transparent 0, white 10%);
 }
 
+.twitch-chat.bottom-up {
+    -webkit-mask-image: linear-gradient(to top, transparent 0, white 10%);
+    mask-image: linear-gradient(to top, transparent 0, white 10%);
+}
+
 .chat-rows {
     /* overflow: hidden;
     height: calc(40svh + 80px); */
@@ -84,6 +89,11 @@ b {
     flex-direction: column;
     justify-content: flex-end;
     gap: 10px;
+}
+
+.twitch-chat.bottom-up .chat-rows {
+    flex-direction: column-reverse;
+    justify-content: flex-start;
 }
 
 .twitch-chat .row {
@@ -229,11 +239,16 @@ ul li {
     margin-bottom: 20px;
 }
 
-.edit + textarea {
+.content-widget {
+    min-width: 230px;
+}
+
+.edit-textarea {
     display: block;
     width: 100%;
     font-size: 18px;
     min-height: 200px;
+    /* min-width: 230px; */
 }
 
 .twitch-chat {

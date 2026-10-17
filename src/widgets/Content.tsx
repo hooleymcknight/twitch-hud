@@ -85,15 +85,14 @@ function Content({ clickThrough, id, show, startContent, updateShowSettings, onC
                         </div>
                     : null }
                 </div>
-                
-            
-                { editing && !clickThrough ?
-                    <>
-                        <textarea placeholder='text here' defaultValue={content}></textarea>
-                    </>
-                : ''}
 
                 <div className={`content-box ${show ? '' : 'invisible'}`} dangerouslySetInnerHTML={{__html: content}}></div>
+
+                { editing && !clickThrough ?
+                    <>
+                        <textarea className={`edit-textarea ${show ? '' : 'invisible'}`} name={`${id}-edit-textarea`} placeholder='text here' defaultValue={content}></textarea>
+                    </>
+                : ''}
 
                 {/* <>
                     <ul>

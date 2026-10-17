@@ -58,7 +58,7 @@ export default function Draggable({ children, clickThrough, id }: { children: Re
                 cursor: "move",
                 padding: 10
             }}
-            className={`draggable-item ${clickThrough ? 'movable-locked' : 'movable'}`}
+            className={`draggable-item ${clickThrough ? 'movable-locked' : 'movable'} ${id.includes('content') ? 'content-widget' : ''}`}
         >
             {children}
         </div>
