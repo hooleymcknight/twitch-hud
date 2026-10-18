@@ -10,6 +10,34 @@
   src: url('./assets/fonts/Orbitron-VariableFont_wght.ttf') format('truetype');
 }
 
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  /* font-display: swap; */
+  src: url('./assets/fonts/Poppins-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Poppins Thin';
+  font-style: normal;
+  /* font-display: swap; */
+  src: url('./assets/fonts/Poppins-Thin.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Poppins SemiBold';
+  font-style: normal;
+  /* font-display: swap; */
+  src: url('./assets/fonts/Poppins-SemiBold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Poppins Bold';
+  font-style: normal;
+  /* font-display: swap; */
+  src: url('./assets/fonts/Poppins-Bold.ttf') format('truetype');
+}
+
 html, body {
     background: transparent;
 }
@@ -105,13 +133,22 @@ b {
 }
 
 .row b {
+    font-family: 'Poppins Thin', Helvetica, Arial, sans-serif;
+    color: #fff;
+    font-size: 24px;
+
     text-align: left;
     margin-right: 16px;
     margin-bottom: 0;
     word-wrap: break-word;
     display: block;
 }
+
 .row p {
+    font-family: 'Poppins SemiBold', Helvetica, Arial, sans-serif;
+    color: var(--lightened-halo-blue);
+    font-size: 24px;
+
     text-align: right;
     line-height: 1.15;
     word-wrap: break-word;
@@ -120,13 +157,7 @@ b {
     margin: 0 0 0 auto;
 }
 
-.row b,
-.row p {
-    font-family: 'Orbitron', Helvetica, Arial, sans-serif;
-    font-size: 24px;
-}
-
-button#clear {
+/* button#clear {
     display: block;
     cursor: pointer;
     margin: 0 0 20px auto;
@@ -134,7 +165,7 @@ button#clear {
     z-index: 2;
     top: 40px;
     right: 20px;
-}
+} */
 
 /** drag and drop **/
 
@@ -210,6 +241,7 @@ button.edit svg {
 
 button.edit.delete {
     background-color: #6e2222;
+    color: #fff;
 }
 button.edit.delete svg {
     fill: #fff;
@@ -308,12 +340,17 @@ ul li {
   filter: drop-shadow(0 0 2em #61dafb);
 }
 :root {
-    font-family: 'Orbitron', Helvetica, Arial, sans-serif;
+    --font-poppins: 'Poppins', Helvetica, Arial, sans-serif;
+    --font-tech: 'Orbitron', Helvetica, Arial, sans-serif;
+    --halo-blue: #38b3ff;
+    --lightened-halo-blue: #89d2ff;
+
+    font-family: var(--font-poppins);
     font-size: 16px;
     line-height: 24px;
     font-weight: 400;
 
-    color: #38b3ff;
+    color: var(--halo-blue);
     background-color: #375C73;
     background: radial-gradient(circle, rgba(55, 92, 115, 0.0) 0%, rgba(55, 92, 115, 0.05) 85%, rgba(55, 92, 115, 0.5) 100%);
     background-size: stretch;
