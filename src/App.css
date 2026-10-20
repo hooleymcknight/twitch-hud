@@ -38,6 +38,10 @@
   src: url('./assets/fonts/Poppins-Bold.ttf') format('truetype');
 }
 
+html {
+    overflow: hidden;
+}
+
 html, body {
     background: transparent;
 }
