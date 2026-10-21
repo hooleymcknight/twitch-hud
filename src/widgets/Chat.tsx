@@ -9,14 +9,13 @@ function Chat({ clickThrough, id, show, updateShowSettings } : { clickThrough: b
     const [showing, setShowing] = useState<boolean>(show);
 
     const onShowHide = () => {
-        console.log('showing?', showing);
         updateShowSettings(showing, id);
         setShowing(!showing);
     }
 
     const clearBotMsgs = () => {
         const newMsgsObj = [...mostRecentMsgs];
-        const filtered = newMsgsObj.filter(x => !x.message.toLowerCase().includes('ai viewers'));
+        const filtered = newMsgsObj.filter(x => !x.message.toLowerCase().includes('ai viewers') && !x.message.toLowerCase().includes(' . com'));
         if (filtered.length && newMsgsObj.length > filtered.length) {
             setMostRecentMsgs(filtered);
         }
