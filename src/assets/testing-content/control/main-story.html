@@ -1,0 +1,94 @@
+<div id="control" style="color: #D9A0A6;">
+    <h2 style="text-align: left; font-size: 28px;">Main Story</h2>
+
+    <div class="completed mission-section">
+        <h3>Prologue: Wake Up</h3>
+        <ol>
+            <li class="completed hidden">Orientation</li>
+        </ol>
+    </div>
+
+    <div class="mission-section">
+        <h3>Contain the Crisis</h3>
+        <ol>
+            <li class="completed">Welcome to Manhattan</li>
+            <li class="completed">Evacuation Procedures</li>
+            <li class="completed">Arish's Briefing</li>
+            <li class="completed">Notes: Plan of Attack
+                <ul style="margin-top: 6px;">
+                    <li class="completed">Power Lines</li>
+                    <li class="completed">Into the Sinkhole</li>
+                </ul>
+            </li>
+            <li>Enemy of My Enemy</li>
+        </ol>
+    </div>
+
+    <div class="mission-section">
+        <h3>Protect the Dimension</h3>
+        <ol>
+            <li>Recursions and Iterations</li>
+            <li>The House in Distress</li>
+            <li>[REDACTED]</li>
+        </ol>
+    </div>
+
+    <div class="mission-section">
+        <h3>Defeat [REDACTED]</h3>
+        <ol>
+            <li>[REDACTED]</li>
+            <li>[REDACTED]</li>
+            <li>[REDACTED]</li>
+            <li>The End</li>
+        </ol>
+    </div>
+
+    <div class="mission-section">
+        <h3>Epilogue</h3>
+        <ol>
+            <li>The Beginning</li>
+        </ol>
+    </div>
+
+    <span style="margin-left: 0; width: 100%; display: none; text-align: left; font-size: 52px; margin-bottom: 10px;">...</span>
+
+    <style>
+        [id*="control"] li {
+            margin-bottom: 8px;
+            font-size: 24px;
+        }
+        .completed {
+            text-decoration: line-through;
+        }
+        .mission-section {
+            text-align: left;
+        }
+        .hidden {
+            display: none;
+        }
+        [id*="control"] h3 {
+            text-align: left;
+            font-size: 20px;
+            text-transform: uppercase;
+            display: block;
+            position: relative;
+            margin-left: -10px;
+        }
+        [id*="control"] h3:before {
+            content: ' ';
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="%23D9A0A6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>');
+            display: inline-block;
+            position: relative;
+            width: 16px;
+            height: 16px;
+            margin-right: 5px;
+            visibility: hidden;
+        }
+        [id*="control"] .completed h3:before {
+            visibility: visible;
+        }
+        .invisible [id*="control"] .completed h3:before {
+            visibility: hidden;
+        }
+    </style>
+</div>
