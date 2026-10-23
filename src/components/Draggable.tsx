@@ -2,7 +2,7 @@ import { load } from "@tauri-apps/plugin-store";
 import { useEffect, useRef, useState } from "react";
 import { Widget } from "../interface";
 
-export default function Draggable({ children, clickThrough, id }: { children: React.ReactNode, clickThrough: boolean, id: string }) {
+export default function Draggable({ children, clickThrough, id, editing }: { children: React.ReactNode, clickThrough: boolean, id: string, editing?: boolean }) {
     const [pos, setPos] = useState({ x: 100, y: 100 });
     const offset = useRef({ x: 0, y: 0 });
 
@@ -58,7 +58,7 @@ export default function Draggable({ children, clickThrough, id }: { children: Re
                 cursor: "move",
                 padding: 10
             }}
-            className={`draggable-item ${clickThrough ? 'movable-locked' : 'movable'} ${id.includes('content') ? 'content-widget' : ''}`}
+            className={`draggable-item ${clickThrough ? 'movable-locked' : 'movable'} ${id.includes('content') ? 'content-widget' : ''} ${ editing ? 'editing-widget' : ''}`}
         >
             {children}
         </div>

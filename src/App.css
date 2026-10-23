@@ -38,6 +38,11 @@
   src: url('./assets/fonts/Poppins-Bold.ttf') format('truetype');
 }
 
+:root {
+    --lavender: #646cff;
+    --lavender-2: #535bf2;
+}
+
 html {
     overflow: hidden;
 }
@@ -94,7 +99,7 @@ b {
     font-weight: 700;
 }
 
-.twitch-chat {
+.chat-full .twitch-chat {
     position: relative;
     padding: 40px;
     width: 500px;
@@ -107,6 +112,37 @@ b {
 
     -webkit-mask-image: linear-gradient(to bottom, transparent 0, white 10%);
     mask-image: linear-gradient(to bottom, transparent 0, white 10%);
+}
+
+.chat-popup .twitch-chat {
+    position: relative;
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+
+    overflow: hidden;
+    height: auto;
+
+    /* -webkit-mask-image: linear-gradient(to bottom, transparent 0, white 10%);
+    mask-image: linear-gradient(to bottom, transparent 0, white 10%); */
+}
+
+.chat-popup .twitch-chat > *:first-child {
+    padding: 40px;
+}
+
+@keyframes fadingChat {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+.chat-popup .twitch-chat.fading {
+    opacity: 0;
+    animation-name: fadingChat;
+    animation-duration: 0.5s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
 }
 
 .twitch-chat.bottom-up {
@@ -236,7 +272,7 @@ button.edit {
 }
 
 button.edit svg {
-    fill: #535bf2;
+    fill: var(--lavender-2);
     width: 20px;
     height: 20px;
     margin: 0;
@@ -253,6 +289,13 @@ button.edit.delete svg {
 button.edit.delete:hover {
     border-color: #5f0000;
     background-color: #5f0000;
+}
+
+button.edit.inverted {
+    background-color: var(--lavender-2);
+}
+button.edit.inverted svg {
+    fill: #fff;
 }
 
 /** list **/
@@ -397,12 +440,12 @@ ul li {
 
 a {
   font-weight: 500;
-  color: #646cff;
+  color: var(--lavender);
   text-decoration: inherit;
 }
 
 a:hover {
-  color: #535bf2;
+  color: var(--lavender-2);
 }
 
 h1 {

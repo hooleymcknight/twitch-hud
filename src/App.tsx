@@ -70,6 +70,17 @@ function App() {
         }
         registerClickThrough();
 
+        const registerKeyboardSave = async () => {
+            await register('CommandOrControl+S', async (e) => {
+                if (e.state === 'Released') return;
+                await unregister('CommandOrControl+S');
+                Array.from(document.querySelectorAll('.editing-widget')).forEach((widget) => {
+                    widget.querySelector<HTMLButtonElement>('button.change-content')?.click()
+                });
+            });
+        }
+        registerKeyboardSave();
+
         const loadSettings = async () => {
             const store = await load('settings.json');
             const widgets = await store.get<Widget[]>('widgets') || [];
