@@ -12,7 +12,7 @@ const ding = new Audio('/twitchHudDing.mp3');
 function Chat({ clickThrough, id, show, updateShowSettings } : { clickThrough: boolean, id: string, show: boolean, updateShowSettings: (showing: boolean, id: string) => void }) {
     const [mostRecentMsgs, setMostRecentMsgs] = useState<Array<MessageObj>>([]);
     const [showing, setShowing] = useState<boolean>(show);
-    const [lastDing, setLastDing] = useState<Date>(new Date());
+    const lastDing = useRef<Date|null>(null);
     const [fullChat, setFullChat] = useState<boolean>(true);
 
     const onShowHide = () => {
@@ -22,11 +22,17 @@ function Chat({ clickThrough, id, show, updateShowSettings } : { clickThrough: b
 
     const playDing = () => {
         const now = new Date();
-        if (now.valueOf() - lastDing.valueOf() <= 3000) return;
-        setLastDing(now);
+        if (lastDing.current && (now.valueOf() - lastDing.current.valueOf()) <= 3000) {
+            console.log('last ding was too recent.');
+            return;
+        }
         
         ding.currentTime = 0;
-        ding.play().catch(err => console.error(err));
+        ding.play().then(() => {
+            console.log('set last ding to', now);
+            lastDing.current = now;
+        }).catch(err => console.error(err));
+
     }
 
     // const clearBotMsgs = () => {
@@ -48,7 +54,7 @@ function Chat({ clickThrough, id, show, updateShowSettings } : { clickThrough: b
         }
 
         websocket.onmessage = (event) => {
-            console.log(event.data);
+            // console.log(event.data);
             const lines = event.data.split('\r\n');
 
             for (const line of lines) {
@@ -65,6 +71,13 @@ function Chat({ clickThrough, id, show, updateShowSettings } : { clickThrough: b
                     const author = line.match(/(?<=!)(\w+)(?=@)/)?.[0];
                     const channelRegex = new RegExp(`(?<=(#${CHANNEL_NAME} :)).+`);
                     const message = line.match(channelRegex)?.[0];
+
+                    for (const substr of SUS_MSG_STRINGS) {
+                        if (message.includes(substr)) { // return; // fully exit.
+                            console.log('leaving bc sus message.');
+                            return;
+                        }
+                    }
 
                     // console.log('author: ', author);
                     // console.log('message:', message);
@@ -92,15 +105,6 @@ function Chat({ clickThrough, id, show, updateShowSettings } : { clickThrough: b
                     const author = line.match(authorRegex)?.[0];
 
                     setMostRecentMsgs(prev => prev.filter(x => x.author !== author));
-
-                    // let newMsgsObj = [...mostRecentMsgs];
-                    // const deleted = newMsgsObj.filter(x => x.author === author);
-                    // if (deleted) {
-                    //     for (const del of deleted) {
-                    //         newMsgsObj.splice(newMsgsObj.indexOf(del), 1);
-                    //     }
-                    //     setMostRecentMsgs(newMsgsObj);
-                    // }
                 }
 
                 // message deleted
@@ -171,7 +175,7 @@ function Chat({ clickThrough, id, show, updateShowSettings } : { clickThrough: b
             </div>
 
             <div className="chat-popup">
-                <div className={`twitch-chat ${show ? '' : 'invisibile'} ${fullChat ? 'hidden' : ''} ${mostRecentMsgs.length ? '' : 'hidden'} `}>
+                <div className={`twitch-chat ${show ? '' : 'invisible'} ${fullChat ? 'hidden' : ''} ${mostRecentMsgs.length ? '' : 'hidden'} `}>
                     <div className="chat-rows">
                         {mostRecentMsgs.length ? 
                             <div className="row">

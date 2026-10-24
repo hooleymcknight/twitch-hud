@@ -61,6 +61,7 @@ function App() {
         
         getCurrentWindow().setIgnoreCursorEvents(clickThrough);
 
+        /** ========== KEY REGISTRATION ========== **/
         const registerClickThrough = async () => {
             await register('CommandOrControl+Shift+F9', async (e) => {
                 if (e.state === 'Released') return;
@@ -75,11 +76,22 @@ function App() {
                 if (e.state === 'Released') return;
                 await unregister('CommandOrControl+S');
                 Array.from(document.querySelectorAll('.editing-widget')).forEach((widget) => {
-                    widget.querySelector<HTMLButtonElement>('button.change-content')?.click()
+                    widget.querySelector<HTMLButtonElement>('button.change-content')?.click();
                 });
             });
         }
         registerKeyboardSave();
+
+        const registerToggleChatVisibility = async () => {
+            await register('F14', async (e) => {
+                if (e.state === 'Released') return;
+                await unregister('F14');
+                document.querySelector<HTMLButtonElement>('[id*="chat"] .edit.change-visibility')?.click();
+            });
+        }
+        registerToggleChatVisibility();
+
+        /** ========== END of KEY REGISTRATION ========== **/
 
         const loadSettings = async () => {
             const store = await load('settings.json');
