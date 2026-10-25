@@ -8,9 +8,9 @@
         </ol>
     </div>
 
-    <div class="mission-section">
+    <div class="completed mission-section">
         <h3>Contain the Crisis</h3>
-        <ol>
+        <ol class="hidden">
             <li class="completed">Welcome to Manhattan</li>
             <li class="completed">Evacuation Procedures</li>
             <li class="completed">Arish's Briefing</li>
@@ -20,30 +20,30 @@
                     <li class="completed">Into the Sinkhole</li>
                 </ul>
             </li>
-            <li>Enemy of My Enemy</li>
+            <li class="completed">Enemy of My Enemy</li>
         </ol>
     </div>
 
-    <div class="mission-section">
+    <div class="mission-section completed">
         <h3>Protect the Dimension</h3>
         <ol>
-            <li>Recursions and Iterations</li>
-            <li>The House in Distress</li>
-            <li>[REDACTED]</li>
+            <li class="completed">Recursions and Iterations</li>
+            <li class="completed">The House in Distress</li>
+            <li class="completed">The Hedron Link</li>
         </ol>
     </div>
 
     <div class="mission-section">
-        <h3>Defeat [REDACTED]</h3>
+        <h3>Defeat the Hedron</h3>
         <ol>
-            <li>[REDACTED]</li>
+            <li>Sever the Hedron Link</li>
             <li>[REDACTED]</li>
             <li>[REDACTED]</li>
             <li>The End</li>
         </ol>
     </div>
 
-    <div class="mission-section">
+    <div class="mission-section hidden">
         <h3>Epilogue</h3>
         <ol>
             <li>The Beginning</li>
@@ -86,6 +86,10 @@
         }
         [id*="control"] .completed h3:before {
             visibility: visible;
+        }
+        [id*="control"] .completed ul,
+        [id*="control"] .completed ol {
+            display: none;
         }
         .invisible [id*="control"] .completed h3:before {
             visibility: hidden;
