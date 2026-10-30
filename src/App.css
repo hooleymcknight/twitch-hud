@@ -41,6 +41,29 @@
 :root {
     --lavender: #646cff;
     --lavender-2: #535bf2;
+    --halo-blue: #38b3ff;
+    --lightened-halo-blue: #89d2ff;
+
+    --halo-perc0: rgba(55, 92, 115, 0.0);
+    --halo-perc05: rgba(55, 92, 115, 0.05);
+    --halo-perc5: rgba(55, 92, 115, 0.5);
+
+    --gtfo-red: rgb(247, 3, 7);
+    --gtfo-perc0: rgba(247, 3, 7, 0);
+    --gtfo-perc05: rgba(247, 3, 7, 0.05);
+    --gtfo-perc5: rgba(247, 3, 7, 0.3);
+
+    --gtfo-yellow: rgb(226, 151, 6);
+    --gtfo-y-perc0: rgba(226, 151, 6, 0);
+    --gtfo-y-perc05: rgba(226, 151, 6, 0.05);
+    --gtfo-y-perc5: rgba(226, 151, 6, 0.3);
+
+    --gtfo-bg: radial-gradient(circle, var(--gtfo-perc0) 0%, var(--gtfo-perc05) 85%, var(--gtfo-perc5) 100%);
+    --gtfo-y-bg: radial-gradient(circle, var(--gtfo-y-perc0) 0%, var(--gtfo-y-perc05) 85%, var(--gtfo-y-perc5) 100%);
+
+    background: var(--gtfo-y-bg);
+
+    --standard-text: var(--gtfo-yellow);
 }
 
 html {
@@ -186,7 +209,7 @@ b {
 
 .row p {
     font-family: 'Poppins SemiBold', Helvetica, Arial, sans-serif;
-    color: var(--lightened-halo-blue);
+    color: var(--standard-text);
     font-size: 24px;
 
     text-align: right;
@@ -389,17 +412,14 @@ ul li {
 :root {
     --font-poppins: 'Poppins', Helvetica, Arial, sans-serif;
     --font-tech: 'Orbitron', Helvetica, Arial, sans-serif;
-    --halo-blue: #38b3ff;
-    --lightened-halo-blue: #89d2ff;
 
     font-family: var(--font-poppins);
     font-size: 16px;
     line-height: 24px;
     font-weight: 400;
 
-    color: var(--halo-blue);
-    background-color: #375C73;
-    background: radial-gradient(circle, rgba(55, 92, 115, 0.0) 0%, rgba(55, 92, 115, 0.05) 85%, rgba(55, 92, 115, 0.5) 100%);
+    color: var(--standard-text);
+    /* background-color: #375C73; */
     background-size: stretch;
     background-repeat: no-repeat;
     background-position: center center;
