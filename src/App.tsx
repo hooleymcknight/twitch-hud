@@ -34,6 +34,21 @@ function App() {
         setWidgets(newWidgets);
     }
 
+    const updateChatDisplay = async (fullDisplay: boolean, id: string) => {
+        const store = await load('settings.json');
+        const currentWidgets = await store.get<Widget[]>('widgets') || [];
+
+        const thisWidget = currentWidgets.find(x => x.id === id);
+        if (!thisWidget) return;
+
+        const remainingWidgets = currentWidgets.filter(x => x.id !== id);
+        thisWidget.fullDisplay = fullDisplay;
+        const newWidgets = [...remainingWidgets, thisWidget];
+        await store.set('widgets', newWidgets);
+
+        setWidgets(newWidgets);
+    }
+
     const deleteWidget = async (id: string) => {
         const store = await load('settings.json');
         const currentWidgets = await store.get<Widget[]>('widgets') || [];
@@ -108,7 +123,7 @@ function App() {
             {
                 widgets.map(x => 
                     x.type === 'chat' ? 
-                        <Chat clickThrough={clickThrough} id={x.id} show={x.show} key={x.id} updateShowSettings={updateShowSettings} />
+                        <Chat clickThrough={clickThrough} id={x.id} show={x.show} fullChatDisplay={x.fullDisplay ?? true} key={x.id} updateShowSettings={updateShowSettings} updateChatDisplay={updateChatDisplay} />
                     : x.type === 'content' ?
                         <Content clickThrough={clickThrough} id={x.id} show={x.show} key={x.id} startContent={x.content} updateShowSettings={updateShowSettings} onConfirmDelete={deleteWidget} />
                     : ''

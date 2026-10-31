@@ -10,4 +10,5 @@ export type Widget = {
     xPos: number,
     yPos: number,
     show: boolean,
+    fullDisplay?: boolean,
 }

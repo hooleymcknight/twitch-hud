@@ -58,12 +58,18 @@
     --gtfo-y-perc05: rgba(226, 151, 6, 0.05);
     --gtfo-y-perc5: rgba(226, 151, 6, 0.3);
 
+    --spooky: rgb(187, 146, 244);
+    --spooky-perc0: rgba(187, 146, 244, 0);
+    --spooky-perc05: rgba(187, 146, 244, 0.05);
+    --spooky-perc5: rgba(187, 146, 244, 0.2);
+
     --gtfo-bg: radial-gradient(circle, var(--gtfo-perc0) 0%, var(--gtfo-perc05) 85%, var(--gtfo-perc5) 100%);
     --gtfo-y-bg: radial-gradient(circle, var(--gtfo-y-perc0) 0%, var(--gtfo-y-perc05) 85%, var(--gtfo-y-perc5) 100%);
+    --spooky-bg: radial-gradient(circle, var(--spooky-perc0) 0%, var(--spooky-perc05) 85%, var(--spooky-perc5) 100%);
 
-    background: var(--gtfo-y-bg);
+    background: var(--spooky-bg);
 
-    --standard-text: var(--gtfo-yellow);
+    --standard-text: var(--spooky);
 }
 
 html {

@@ -5,15 +5,16 @@ import Draggable from "../components/Draggable";
 const CHANNEL_NAME = 'hollyngrade';
 const SUS_MSG_STRINGS = [
     'ai viewers',
-    ' . com'
+    ' . com',
+    '.com'
 ]
 const ding = new Audio('/twitchHudDing.mp3');
 
-function Chat({ clickThrough, id, show, updateShowSettings } : { clickThrough: boolean, id: string, show: boolean, updateShowSettings: (showing: boolean, id: string) => void }) {
+function Chat({ clickThrough, id, show, fullChatDisplay, updateShowSettings, updateChatDisplay } : { clickThrough: boolean, id: string, show: boolean, fullChatDisplay: boolean, updateShowSettings: (showing: boolean, id: string) => void, updateChatDisplay: (fullDisplay: boolean, id: string) => void }) {
     const [mostRecentMsgs, setMostRecentMsgs] = useState<Array<MessageObj>>([]);
     const [showing, setShowing] = useState<boolean>(show);
     const lastDing = useRef<Date|null>(null);
-    const [fullChat, setFullChat] = useState<boolean>(true);
+    const [fullChat, setFullChat] = useState<boolean>(fullChatDisplay);
 
     const onShowHide = () => {
         updateShowSettings(showing, id);
@@ -23,16 +24,19 @@ function Chat({ clickThrough, id, show, updateShowSettings } : { clickThrough: b
     const playDing = () => {
         const now = new Date();
         if (lastDing.current && (now.valueOf() - lastDing.current.valueOf()) <= 3000) {
-            console.log('last ding was too recent.');
             return;
         }
         
         ding.currentTime = 0;
         ding.play().then(() => {
-            console.log('set last ding to', now);
             lastDing.current = now;
         }).catch(err => console.error(err));
 
+    }
+
+    const displayHandler = (fullChatValue: boolean) => {
+        updateChatDisplay(!fullChatValue, id);
+        setFullChat(!fullChatValue);
     }
 
     // const clearBotMsgs = () => {
@@ -42,6 +46,15 @@ function Chat({ clickThrough, id, show, updateShowSettings } : { clickThrough: b
     //         setMostRecentMsgs(filtered);
     //     }
     // }
+
+    /**
+     
+    @badge-info=subscriber/13;badges=broadcaster/1,subscriber/12,clips-leader/1;color=#B22222;display-name=hollyngrade;
+    emotes=;flags=;id=b3f7bec6-0872-4d2d-af3b-859805aef910;login=hollyngrade;mod=0;msg-id=announcement;
+    msg-param-color=PRIMARY;room-id=1386739188;subscriber=1;system-msg=;tmi-sent-ts=1793413805182;user-id=1386739188;user-type=;vip=0
+    :tmi.twitch.tv USERNOTICE #hollyngrade :I just really want yalls events like stream streaks to show  up on the hud 
+     
+     */
 
     useEffect(() => {
         const wsUri = 'wss://irc-ws.chat.twitch.tv:443';
@@ -54,7 +67,7 @@ function Chat({ clickThrough, id, show, updateShowSettings } : { clickThrough: b
         }
 
         websocket.onmessage = (event) => {
-            // console.log(event.data);
+            console.log(event.data);
             const lines = event.data.split('\r\n');
 
             for (const line of lines) {
@@ -66,11 +79,13 @@ function Chat({ clickThrough, id, show, updateShowSettings } : { clickThrough: b
 
                 // handle user message
                 // ========= INCOMING MESSAGE =========
-                if (line.includes('PRIVMSG')) {
+                if (line.includes('PRIVMSG') || line.includes('USERNOTICE')) {
                     // console.log(line);
                     const author = line.match(/(?<=!)(\w+)(?=@)/)?.[0];
                     const channelRegex = new RegExp(`(?<=(#${CHANNEL_NAME} :)).+`);
                     const message = line.match(channelRegex)?.[0];
+
+                    if (author === 'StreamElements') return;
 
                     for (const substr of SUS_MSG_STRINGS) {
                         if (message.includes(substr)) { // return; // fully exit.
@@ -142,7 +157,7 @@ function Chat({ clickThrough, id, show, updateShowSettings } : { clickThrough: b
     return (
         <Draggable clickThrough={clickThrough} id={id}>
             <div className="edit-buttons">
-                <button className={`edit change-display ${clickThrough ? 'invisible' : ''}`} onClick={() => { setFullChat(!fullChat); }}>
+                <button className={`edit change-display ${clickThrough ? 'invisible' : ''}`} onClick={() => { displayHandler(fullChat); }}>
                     STYLE
                 </button>
                 <button className={`edit change-visibility ${clickThrough ? 'invisible' : ''}`} onClick={() => { onShowHide(); }}>
