@@ -58,7 +58,14 @@ export default function Draggable({ children, clickThrough, id, editing }: { chi
                 cursor: "move",
                 padding: 10
             }}
-            className={`draggable-item ${clickThrough ? 'movable-locked' : 'movable'} ${id.includes('content') ? 'content-widget' : ''} ${ editing ? 'editing-widget' : ''}`}
+            className={
+                `draggable-item ${
+                    clickThrough ? 'movable-locked' : 'movable'
+                } ${
+                    id.includes('content') ? 'content-widget' : id.includes('chat') ? 'chat-widget' : ''
+                } ${
+                    editing ? 'editing-widget' : ''
+                }`}
         >
             {children}
         </div>

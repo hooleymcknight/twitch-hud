@@ -9,6 +9,7 @@ const SUS_MSG_STRINGS = [
     '.com'
 ]
 const ding = new Audio('/twitchHudDing.mp3');
+let msgTimeout: number | null;
 
 function Chat({ clickThrough, id, show, fullChatDisplay, updateShowSettings, updateChatDisplay } : { clickThrough: boolean, id: string, show: boolean, fullChatDisplay: boolean, updateShowSettings: (showing: boolean, id: string) => void, updateChatDisplay: (fullDisplay: boolean, id: string) => void }) {
     const [mostRecentMsgs, setMostRecentMsgs] = useState<Array<MessageObj>>([]);
@@ -49,10 +50,10 @@ function Chat({ clickThrough, id, show, fullChatDisplay, updateShowSettings, upd
 
     /**
      
-    @badge-info=subscriber/13;badges=broadcaster/1,subscriber/12,clips-leader/1;color=#B22222;display-name=hollyngrade;
-    emotes=;flags=;id=b3f7bec6-0872-4d2d-af3b-859805aef910;login=hollyngrade;mod=0;msg-id=announcement;
-    msg-param-color=PRIMARY;room-id=1386739188;subscriber=1;system-msg=;tmi-sent-ts=1793413805182;user-id=1386739188;user-type=;vip=0
-    :tmi.twitch.tv USERNOTICE #hollyngrade :I just really want yalls events like stream streaks to show  up on the hud 
+        @badge-info=subscriber/13;badges=broadcaster/1,subscriber/12,clips-leader/1;color=#B22222;display-name=hollyngrade;
+        emotes=;flags=;id=b3f7bec6-0872-4d2d-af3b-859805aef910;login=hollyngrade;mod=0;msg-id=announcement;
+        msg-param-color=PRIMARY;room-id=1386739188;subscriber=1;system-msg=;tmi-sent-ts=1793413805182;user-id=1386739188;user-type=;vip=0
+        :tmi.twitch.tv USERNOTICE #hollyngrade :I just really want yalls events like stream streaks to show  up on the hud 
      
      */
 
@@ -102,13 +103,14 @@ function Chat({ clickThrough, id, show, fullChatDisplay, updateShowSettings, upd
                     };
 
                     document.querySelector('.chat-popup .twitch-chat')?.classList.remove('fading');
+                    if (msgTimeout) clearTimeout(msgTimeout);
                     
                     playDing();
                     if (!fullChat) {
-                        setTimeout(() => {
+                        const time = message.length % 15;
+                        msgTimeout = setTimeout(() => {
                             document.querySelector('.chat-popup .twitch-chat')?.classList.add('fading');
-
-                        }, 3000);
+                        }, time * 3000);
                     }
                     setMostRecentMsgs(prev => [...prev, msgObj]);
                 }
@@ -174,10 +176,10 @@ function Chat({ clickThrough, id, show, fullChatDisplay, updateShowSettings, upd
 
             <div className="chat-full">
                 <div className={`twitch-chat ${show ? '' : 'invisible'} ${fullChat ? '' : 'hidden'}`}>
-                    {mostRecentMsgs.length ? 
+                    { mostRecentMsgs.length ? 
                         <>
                             <div className="chat-rows">
-                                {mostRecentMsgs.map((msg, idx) => 
+                                { mostRecentMsgs.map((msg, idx) => 
                                     <div className="row" key={idx}>
                                         <b>{msg.author}</b>
                                         <p>{msg.message}</p>
@@ -185,14 +187,14 @@ function Chat({ clickThrough, id, show, fullChatDisplay, updateShowSettings, upd
                                 )}
                             </div>
                         </>
-                    : ''}
+                    : '' }
                 </div>
             </div>
 
             <div className="chat-popup">
                 <div className={`twitch-chat ${show ? '' : 'invisible'} ${fullChat ? 'hidden' : ''} ${mostRecentMsgs.length ? '' : 'hidden'} `}>
                     <div className="chat-rows">
-                        {mostRecentMsgs.length ? 
+                        { mostRecentMsgs.length ? 
                             <div className="row">
                                 <b>{mostRecentMsgs[mostRecentMsgs.length - 1].author}</b>
                                 <p>{mostRecentMsgs[mostRecentMsgs.length - 1].message}</p>

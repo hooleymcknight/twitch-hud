@@ -167,9 +167,10 @@ b {
 }
 
 .chat-popup .twitch-chat.fading {
+    --fade-time: 0.5s;
     opacity: 0;
     animation-name: fadingChat;
-    animation-duration: 0.5s;
+    animation-duration: var(--fade-time);
     animation-iteration-count: 1;
     animation-fill-mode: forwards;
 }
