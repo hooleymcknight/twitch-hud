@@ -110,7 +110,7 @@ function Chat({ clickThrough, id, show, fullChatDisplay, updateShowSettings, upd
                         const time = message.length % 15;
                         msgTimeout = setTimeout(() => {
                             document.querySelector('.chat-popup .twitch-chat')?.classList.add('fading');
-                        }, time * 3000);
+                        }, time * 2000);
                     }
                     setMostRecentMsgs(prev => [...prev, msgObj]);
                 }
