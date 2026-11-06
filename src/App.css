@@ -56,20 +56,32 @@
     --gtfo-yellow: rgb(226, 151, 6);
     --gtfo-y-perc0: rgba(226, 151, 6, 0);
     --gtfo-y-perc05: rgba(226, 151, 6, 0.05);
-    --gtfo-y-perc5: rgba(226, 151, 6, 0.3);
+    --gtfo-y-perc5: rgba(226, 151, 6, 0.2);
 
     --spooky: rgb(187, 146, 244);
     --spooky-perc0: rgba(187, 146, 244, 0);
     --spooky-perc05: rgba(187, 146, 244, 0.05);
     --spooky-perc5: rgba(187, 146, 244, 0.2);
 
+    --mass-effect: rgb(251, 135, 55);
+    --mass-effect-perc0: rgba(251, 135, 55, 0);
+    --mass-effect-perc05: rgba(251, 135, 55, 0.05);
+    --mass-effect-perc5: rgba(251, 135, 55, 0.2);
+
+    --monster-hw: rgb(110, 255, 48);
+    --monster-hw-perc0: rgba(110, 255, 48, 0);
+    --monster-hw-perc05: rgba(110, 255, 48, 0.05);
+    --monster-hw-perc5: rgba(110, 255, 48, 0.2);
+
     --gtfo-bg: radial-gradient(circle, var(--gtfo-perc0) 0%, var(--gtfo-perc05) 85%, var(--gtfo-perc5) 100%);
     --gtfo-y-bg: radial-gradient(circle, var(--gtfo-y-perc0) 0%, var(--gtfo-y-perc05) 85%, var(--gtfo-y-perc5) 100%);
     --spooky-bg: radial-gradient(circle, var(--spooky-perc0) 0%, var(--spooky-perc05) 85%, var(--spooky-perc5) 100%);
+    --mass-effect-bg: radial-gradient(circle, var(--mass-effect-perc0) 0%, var(--mass-effect-perc05) 85%, var(--mass-effect-perc5) 100%);
+    --monster-hw-bg: radial-gradient(circle, var(--monster-hw-perc0) 0%, var(--monster-hw-perc05) 85%, var(--monster-hw-perc5) 100%);
 
-    background: var(--spooky-bg);
+    background: var(--monster-hw-bg);
 
-    --standard-text: var(--spooky);
+    --standard-text: var(--monster-hw);
 }
 
 html {
