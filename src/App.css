@@ -54,6 +54,7 @@
     --gtfo-perc5: rgba(247, 3, 7, 0.3);
 
     --gtfo-yellow: rgb(226, 151, 6);
+    --gtfo-y: var(--gtfo-yellow);
     --gtfo-y-perc0: rgba(226, 151, 6, 0);
     --gtfo-y-perc05: rgba(226, 151, 6, 0.05);
     --gtfo-y-perc5: rgba(226, 151, 6, 0.2);
@@ -73,15 +74,21 @@
     --monster-hw-perc05: rgba(110, 255, 48, 0.05);
     --monster-hw-perc5: rgba(110, 255, 48, 0.2);
 
+    --neva: rgb(254, 219, 213);
+    --neva-perc0: rgba(254, 219, 213, 0);
+    --neva-perc05: rgba(254, 219, 213, 0.05);
+    --neva-perc5: rgba(254, 219, 213, 0.2);
+
     --gtfo-bg: radial-gradient(circle, var(--gtfo-perc0) 0%, var(--gtfo-perc05) 85%, var(--gtfo-perc5) 100%);
     --gtfo-y-bg: radial-gradient(circle, var(--gtfo-y-perc0) 0%, var(--gtfo-y-perc05) 85%, var(--gtfo-y-perc5) 100%);
     --spooky-bg: radial-gradient(circle, var(--spooky-perc0) 0%, var(--spooky-perc05) 85%, var(--spooky-perc5) 100%);
     --mass-effect-bg: radial-gradient(circle, var(--mass-effect-perc0) 0%, var(--mass-effect-perc05) 85%, var(--mass-effect-perc5) 100%);
     --monster-hw-bg: radial-gradient(circle, var(--monster-hw-perc0) 0%, var(--monster-hw-perc05) 85%, var(--monster-hw-perc5) 100%);
+    --neva-bg: radial-gradient(circle, var(--neva-perc0) 0%, var(--neva-perc05) 85%, var(--neva-perc5) 100%);
 
-    background: var(--monster-hw-bg);
+    background: var(--gtfo-y-bg);
 
-    --standard-text: var(--monster-hw);
+    --standard-text: var(--gtfo-y);
 }
 
 html {
