@@ -79,14 +79,26 @@
     --neva-perc05: rgba(254, 219, 213, 0.05);
     --neva-perc5: rgba(254, 219, 213, 0.2);
 
+    --patho-sepia: rgb(122, 119, 119);
+    --patho-perc0: rgba(122, 119, 119, 0);
+    --patho-perc05: rgba(122, 119, 119, 0.05);
+    --patho-perc5: rgba(122, 119, 119, 0.3);
+
+    --quarry-blue: rgb(37, 59, 83);
+    --quarry-perc0: rgba(37, 59, 83, 0);
+    --quarry-perc05: rgba(37, 59, 83, 0.05);
+    --quarry-perc5: rgba(37, 59, 83, 0.3);
+
     --gtfo-bg: radial-gradient(circle, var(--gtfo-perc0) 0%, var(--gtfo-perc05) 85%, var(--gtfo-perc5) 100%);
     --gtfo-y-bg: radial-gradient(circle, var(--gtfo-y-perc0) 0%, var(--gtfo-y-perc05) 85%, var(--gtfo-y-perc5) 100%);
     --spooky-bg: radial-gradient(circle, var(--spooky-perc0) 0%, var(--spooky-perc05) 85%, var(--spooky-perc5) 100%);
     --mass-effect-bg: radial-gradient(circle, var(--mass-effect-perc0) 0%, var(--mass-effect-perc05) 85%, var(--mass-effect-perc5) 100%);
     --monster-hw-bg: radial-gradient(circle, var(--monster-hw-perc0) 0%, var(--monster-hw-perc05) 85%, var(--monster-hw-perc5) 100%);
     --neva-bg: radial-gradient(circle, var(--neva-perc0) 0%, var(--neva-perc05) 85%, var(--neva-perc5) 100%);
+    --patho-bg: radial-gradient(circle, var(--patho-perc0) 0%, var(--patho-perc05) 85%, var(--patho-perc5) 100%);
+    --quarry-bg: radial-gradient(circle, var(--quarry-perc0) 0%, var(--quarry-perc05) 85%, var(--quarry-perc5) 100%);
 
-    background: var(--gtfo-y-bg);
+    background: var(--quarry-bg);
 
     --standard-text: var(--gtfo-y);
 }
