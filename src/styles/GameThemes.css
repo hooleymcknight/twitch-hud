@@ -1,0 +1,17 @@
+:root {
+  --c: rgb(226, 151, 6);
+}
+
+/* The gradient, written once */
+.scheme {
+    background: radial-gradient(circle,
+        rgb(from var(--c) r g b / 0) 0%,
+        rgb(from var(--c) r g b / var(--knob1, 0.05)) 85%,
+        rgb(from var(--c) r g b / var(--knob2, 0.3)) 100%
+    );
+}
+
+.color-dropdown {
+    width: 300px;
+    
+}

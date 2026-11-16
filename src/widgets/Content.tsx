@@ -4,7 +4,7 @@ import Draggable from "../components/Draggable";
 import Edit from "../components/Edit";
 import { Widget } from "../interface";
 
-function Content({ clickThrough, id, show, startContent, updateShowSettings, onConfirmDelete } : { clickThrough: boolean, id: string, show: boolean, startContent: string, updateShowSettings: (showing: boolean, id: string) => void, onConfirmDelete: (id: string) => void }) {
+function Content({ clickThrough, id, show, startContent, currentWidgets, updateShowSettings, onConfirmDelete } : { clickThrough: boolean, id: string, show: boolean, startContent: string, currentWidgets: Widget[], updateShowSettings: (showing: boolean, id: string) => void, onConfirmDelete: (id: string) => void }) {
     const [editing, setEditing] = useState<boolean>(false);
     const [content, setContent] = useState<string>(startContent);
     const [showing, setShowing] = useState<boolean>(show);
@@ -46,16 +46,21 @@ function Content({ clickThrough, id, show, startContent, updateShowSettings, onC
     }
 
     const handleKeyTextarea = (e: KeyboardEvent) => {
-        if (e.key === 'S') {
+        console.log('keyyyy', e.key)
+        if (e.code === 'KeyS' && e.getModifierState('Control')) {
             console.log(e.key + '---' + e.getModifierState('Control'))
+            e.preventDefault();
+            // onEditSubmit(e);
+            // Array.from(document.querySelectorAll('.editing-widget')).forEach((widget) => {
+            //     widget.querySelector<HTMLButtonElement>('button.change-content')?.click()
+            // });
         }
-        // onEditSubmit(e);
     }
 
     useEffect(() => {
-        const loadSettings = async () => {
-            const store = await load('settings.json');
-            const currentWidgets = await store.get<Widget[]>('widgets') || [];
+        // const loadSettings = async () => {
+        //     const store = await load('settings.json');
+        //     const currentWidgets = await store.get<Widget[]>('widgets') || [];
             const thisWidget = currentWidgets.filter(x => x.id === id)[0];
 
             if (!thisWidget) return;
@@ -63,8 +68,8 @@ function Content({ clickThrough, id, show, startContent, updateShowSettings, onC
             if (content !== thisWidget.content) {
                 setContent(thisWidget.content);
             }
-        }
-        loadSettings();
+        // }
+        // loadSettings();
 
         if(clickThrough) setIsDeleting(false);
     }, [showing, clickThrough]);

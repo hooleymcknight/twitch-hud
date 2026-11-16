@@ -7,17 +7,20 @@ import {
 } from "@tauri-apps/api/window";
 
 import { load } from "@tauri-apps/plugin-store";
-import { register, unregister } from "@tauri-apps/plugin-global-shortcut";
 import "./App.css";
+import "./styles/GameThemes.css";
 import Chat from "./widgets/Chat";
 import Content from "./widgets/Content";
 import AddWidget from "./components/AddWidget";
 import { Widget } from "./interface";
 import { addWidget } from "./settingsHelper";
+import { Preset, presets } from "./helpers/colorPresets";
+import registerHotkeys from "./helpers/registerHotkeys";
 
 function App() {
     const [clickThrough, setClickThrough] = useState(true);
     const [widgets, setWidgets] = useState<Widget[]>([]);
+    const [presetId, setPresetId] = useState<Preset['id']>(presets[0].id);
 
     const updateShowSettings = async (showing: boolean, id: string) => {
         const store = await load('settings.json');
@@ -73,40 +76,8 @@ function App() {
             await win.setSize(new PhysicalSize(monitor.size.width, monitor.size.height));
         };
         fit().catch(console.error);
-        
-        getCurrentWindow().setIgnoreCursorEvents(clickThrough);
 
-        /** ========== KEY REGISTRATION ========== **/
-        const registerClickThrough = async () => {
-            await register('CommandOrControl+Shift+F9', async (e) => {
-                if (e.state === 'Released') return;
-                await unregister('CommandOrControl+Shift+F9');
-                setClickThrough(!clickThrough);
-            });
-        }
-        registerClickThrough();
-
-        const registerKeyboardSave = async () => {
-            await register('CommandOrControl+S', async (e) => {
-                if (e.state === 'Released') return;
-                await unregister('CommandOrControl+S');
-                Array.from(document.querySelectorAll('.editing-widget')).forEach((widget) => {
-                    widget.querySelector<HTMLButtonElement>('button.change-content')?.click();
-                });
-            });
-        }
-        registerKeyboardSave();
-
-        const registerToggleChatVisibility = async () => {
-            await register('F14', async (e) => {
-                if (e.state === 'Released') return;
-                await unregister('F14');
-                document.querySelector<HTMLButtonElement>('[id*="chat"] .edit.change-visibility')?.click();
-            });
-        }
-        registerToggleChatVisibility();
-
-        /** ========== END of KEY REGISTRATION ========== **/
+        const unregisterAll = registerHotkeys(setClickThrough);
 
         const loadSettings = async () => {
             const store = await load('settings.json');
@@ -114,10 +85,20 @@ function App() {
             setWidgets(widgets);
         }
         loadSettings();
+
+        return () => {
+            unregisterAll();
+        }
+
+    }, []);
+
+    useEffect(() => {
+        getCurrentWindow().setIgnoreCursorEvents(clickThrough);
+        getCurrentWindow().setFocus();
     }, [clickThrough]);
 
     return (
-        <main className="container">
+        <main className="container hud-bg">
             <AddWidget clickThrough={clickThrough} updateSettingsAddWidget={updateSettingsAddWidget} />
 
             {
@@ -125,10 +106,17 @@ function App() {
                     x.type === 'chat' ? 
                         <Chat clickThrough={clickThrough} id={x.id} show={x.show} fullChatDisplay={x.fullDisplay ?? true} key={x.id} updateShowSettings={updateShowSettings} updateChatDisplay={updateChatDisplay} />
                     : x.type === 'content' ?
-                        <Content clickThrough={clickThrough} id={x.id} show={x.show} key={x.id} startContent={x.content} updateShowSettings={updateShowSettings} onConfirmDelete={deleteWidget} />
+                        <Content clickThrough={clickThrough} id={x.id} show={x.show} key={x.id} startContent={x.content} currentWidgets={widgets} updateShowSettings={updateShowSettings} onConfirmDelete={deleteWidget} />
                     : ''
                 )
             }
+
+            <select className={`color-dropdown ${clickThrough ? '' : ''}`} value={presetId} onChange={(e) => { setPresetId(e.currentTarget.value); }}>
+                <option>test</option>
+                {presets.map(x => 
+                    <option key={x.id} value={x.id}>{x.name}</option>
+                )}
+            </select>
 
         </main>
     );

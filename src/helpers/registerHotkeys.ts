@@ -1,23 +1,37 @@
-import { register, unregister } from "@tauri-apps/plugin-global-shortcut";
+import { isRegistered, register, unregister } from "@tauri-apps/plugin-global-shortcut";
+import type { Dispatch, SetStateAction } from 'react';
 
-export default function registerHotkeys (clickThrough: boolean, setClickThrough: (value: boolean) => void) {
+const interactHotkey = 'CommandOrControl+Shift+F9';
+// const saveHotkey = 'CommandOrControl+S';
+const chatShowHotkey = 'F14';
+
+export default function registerHotkeys (setClickThrough: Dispatch<SetStateAction<boolean>>) {
     const registerClickThrough = async () => {
-        await register('CommandOrControl+Shift+F9', async (e) => {
+        if (await isRegistered(interactHotkey)) {
+            await unregister(interactHotkey);
+        }
+        await register(interactHotkey, async (e) => {
             if (e.state === 'Released') return;
-            await unregister('CommandOrControl+Shift+F9');
-            setClickThrough(!clickThrough);
+            setClickThrough(prev => !prev);
         });
     }
     registerClickThrough();
 
-    const registerKeyboardSave = async () => {
-        await register('CommandOrControl+S', async (e) => {
+    const registerToggleChatVisibility = async () => {
+        if (await isRegistered(chatShowHotkey)) {
+            await unregister(chatShowHotkey);
+        }
+        await register(chatShowHotkey, async (e) => {
             if (e.state === 'Released') return;
-            await unregister('CommandOrControl+S');
-            Array.from(document.querySelectorAll('.editing-widget')).forEach((widget) => {
-                widget.querySelector<HTMLButtonElement>('button.change-content')?.click()
-            });
+            document.querySelector<HTMLButtonElement>('[id*="chat"] .edit.change-visibility')?.click();
         });
     }
-    registerKeyboardSave();
+    registerToggleChatVisibility();
+
+    const unregisterAll = () => {
+        unregister(interactHotkey).catch(err => {console.error(err)});
+        unregister(chatShowHotkey).catch(err => {console.error(err)});
+    }
+
+    return unregisterAll;
 }
