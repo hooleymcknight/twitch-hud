@@ -94,6 +94,11 @@
     --shf-perc05: rgba(234, 219, 177, 0.05);
     --shf-perc5: rgba(234, 219, 177, 0.3);
 
+    --witcher: rgb(193, 195, 194);
+    --w3-perc0: rgba(193, 195, 194, 0);
+    --w3-perc05: rgba(193, 195, 194, 0.05);
+    --w3-perc5: rgba(193, 195, 194, 0.3);
+
     --gtfo-bg: radial-gradient(circle, var(--gtfo-perc0) 0%, var(--gtfo-perc05) 85%, var(--gtfo-perc5) 100%);
     --gtfo-y-bg: radial-gradient(circle, var(--gtfo-y-perc0) 0%, var(--gtfo-y-perc05) 85%, var(--gtfo-y-perc5) 100%);
     --spooky-bg: radial-gradient(circle, var(--spooky-perc0) 0%, var(--spooky-perc05) 85%, var(--spooky-perc5) 100%);
@@ -102,10 +107,11 @@
     --neva-bg: radial-gradient(circle, var(--neva-perc0) 0%, var(--neva-perc05) 85%, var(--neva-perc5) 100%);
     --patho-bg: radial-gradient(circle, var(--patho-perc0) 0%, var(--patho-perc05) 85%, var(--patho-perc5) 100%);
     --quarry-bg: radial-gradient(circle, var(--quarry-perc0) 0%, var(--quarry-perc05) 85%, var(--quarry-perc5) 100%);
+    --witcher-3-bg: radial-gradient(circle, var(--w3-perc0) 0%, var(--w3-perc05) 90%, var(--w3-perc5) 100%);
 
-    background: var(--quarry-bg);
+    background: var(--witcher-3-bg);
 
-    --standard-text: var(--silent-hill-f);
+    --standard-text: var(--witcher);
 }
 
 html {
