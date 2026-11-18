@@ -111,7 +111,7 @@ function App() {
                 )
             }
 
-            <select className={`color-dropdown ${clickThrough ? '' : ''}`} value={presetId} onChange={(e) => { setPresetId(e.currentTarget.value); }}>
+            <select className={`color-dropdown ${clickThrough ? 'hidden' : ''}`} value={presetId} onChange={(e) => { setPresetId(e.currentTarget.value); }}>
                 <option>test</option>
                 {presets.map(x => 
                     <option key={x.id} value={x.id}>{x.name}</option>

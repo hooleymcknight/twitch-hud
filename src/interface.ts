@@ -1,6 +1,8 @@
 export interface MessageObj {
     author: string;
-    message: string;
+    message?: string;
+    messagePieces?: Array<Emote|MsgText>;
+    emotes?: Emote[];
 }
 
 export type Widget = {
@@ -11,4 +13,16 @@ export type Widget = {
     yPos: number,
     show: boolean,
     fullDisplay?: boolean,
+}
+
+export interface Emote {
+    type: 'emote',
+    id: string,
+    start: number,
+    end: number,
+}
+
+export interface MsgText {
+    type: 'text',
+    content: string,
 }

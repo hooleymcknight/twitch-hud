@@ -39,7 +39,7 @@
 }
 
 :root {
-    /* --lavender: #646cff;
+    --lavender: #646cff;
     --lavender-2: #535bf2;
     --halo-blue: #38b3ff;
     --lightened-halo-blue: #89d2ff;
@@ -109,9 +109,9 @@
     --quarry-bg: radial-gradient(circle, var(--quarry-perc0) 0%, var(--quarry-perc05) 85%, var(--quarry-perc5) 100%);
     --witcher-3-bg: radial-gradient(circle, var(--w3-perc0) 0%, var(--w3-perc05) 90%, var(--w3-perc5) 100%);
 
-    background: var(--witcher-3-bg);
+    background: var(--gtfo-y-bg);
 
-    --standard-text: var(--witcher); */
+    --standard-text: var(--gtfo-y);
 }
 
 html {
@@ -410,12 +410,14 @@ ul li {
     /* background: radial-gradient(rgba(0, 0, 0, 0.8) 0, rgba(0, 0, 0, 0.5) 70%, rgba(0, 0, 0, 0) 80%); */
     background: rgba(0, 0, 0, 0.8);
     padding: 20px 40px;
+    text-align: left;
 }
 
 .content-box ul,
 .content-box ol {
     text-align: left;
-    font-size: 20px;
+    font-size: 28px;
+    line-height: 32px;
 }
 
 .content-box p {

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
-import { MessageObj } from "../interface";
+import { MessageObj, Emote, MsgText } from "../interface";
 import Draggable from "../components/Draggable";
+import ChatMessage from "../components/ChatMessage";
 
 const CHANNEL_NAME = 'hollyngrade';
 const SUS_MSG_STRINGS = [
@@ -97,10 +98,72 @@ function Chat({ clickThrough, id, show, fullChatDisplay, updateShowSettings, upd
 
                     // console.log('author: ', author);
                     // console.log('message:', message);
-                    const msgObj = {
+                    const msgObj: MessageObj = {
                         author: author,
-                        message: message
                     };
+
+                    // emotesv2_1ffbd7ef02ed4530ba3e1c0e7fe044af:36-49/emotesv2_c01ee94a08f44e14969a648bf3d99af2:0-16/emotesv2_883f689ba1f24c53a7429633b9809820:18-34
+                    const emotesLine = line.match(/(?<=emotes=)([^;]+)(?<!;)/g)?.[0];
+                    const emotesInMsg: Emote[] = [];
+                    if (emotesLine?.length) {
+                        const emoteTypes = emotesLine.split('/');
+                        for (const emoteType of emoteTypes) {
+                            const id = emoteType.split(':')[0];
+                            const positions = emoteType.split(':')[1].split(','); // 36-49,51-60
+                            for (const entry of positions) { // entry: 36-49
+                                const startNum = Number(entry.split('-')[0]);
+                                const endNum = Number(entry.split('-')[1]);
+
+                                emotesInMsg.push({
+                                    type: 'emote',
+                                    id: id,
+                                    start: startNum,
+                                    end: endNum,
+                                });
+                            }
+                        }
+
+                        emotesInMsg.sort((a, b) => a.start - b.start);
+
+                        const messagePieces: Array<Emote|MsgText> = [];
+                        Array.from(message).forEach((char, idx) => {
+                            const emojiStarts = emotesInMsg.map(x => x.start);
+                            const textStarts = emotesInMsg.map(x => (x.end + 1));
+                            const mostRecentPiece = messagePieces[messagePieces.length - 1];
+
+                            if (emojiStarts.includes(idx)) {
+                                // start a new section of the message piece -- an emoji.
+                                messagePieces.push(emotesInMsg.filter(x => x.start === idx)?.[0]);
+                            }
+                            else if (textStarts.includes(idx) || !mostRecentPiece) {
+                                // start a new section of the message piece -- text!
+                                messagePieces.push({
+                                    type: 'text',
+                                    content: String(char),
+                                });
+                            }
+                            else {
+                                // if text, just add to it. 
+                                // if emoji, just keep goin.
+                                
+                                console.log('most recent piece', mostRecentPiece);
+                                if (mostRecentPiece?.type === 'text') {
+                                    mostRecentPiece.content += char;
+                                }
+                                else { // emote
+                                    // do nothing
+                                }
+                            }
+                        });
+
+                        console.log(messagePieces);
+                        msgObj.messagePieces = messagePieces;
+                    }
+                    else {
+                        msgObj.message = message;
+                    }
+
+                    console.log(msgObj);
 
                     document.querySelector('.chat-popup .twitch-chat')?.classList.remove('fading');
                     if (msgTimeout) clearTimeout(msgTimeout);
@@ -182,7 +245,10 @@ function Chat({ clickThrough, id, show, fullChatDisplay, updateShowSettings, upd
                                 { mostRecentMsgs.map((msg, idx) => 
                                     <div className="row" key={idx}>
                                         <b>{msg.author}</b>
-                                        <p>{msg.message}</p>
+                                        {
+                                            msg.message ? <ChatMessage key={msg.message} message={msg.message} />
+                                            : <ChatMessage key={msg.author} messagePieces={msg.messagePieces} />
+                                        }
                                     </div>
                                 )}
                             </div>
@@ -197,7 +263,11 @@ function Chat({ clickThrough, id, show, fullChatDisplay, updateShowSettings, upd
                         { mostRecentMsgs.length ? 
                             <div className="row">
                                 <b>{mostRecentMsgs[mostRecentMsgs.length - 1].author}</b>
-                                <p>{mostRecentMsgs[mostRecentMsgs.length - 1].message}</p>
+                                {/* <p>{mostRecentMsgs[mostRecentMsgs.length - 1].message}</p> */}
+                                {
+                                    mostRecentMsgs[mostRecentMsgs.length - 1].message ? <ChatMessage key={mostRecentMsgs[mostRecentMsgs.length - 1].message} message={mostRecentMsgs[mostRecentMsgs.length - 1].message} />
+                                    : <ChatMessage key={mostRecentMsgs[mostRecentMsgs.length - 1].author} messagePieces={mostRecentMsgs[mostRecentMsgs.length - 1].messagePieces} />
+                                }
                             </div>
                         : null }
                     </div>
