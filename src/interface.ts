@@ -3,6 +3,8 @@ export interface MessageObj {
     message?: string;
     messagePieces?: Array<Emote|MsgText>;
     emotes?: Emote[];
+    delay?: number;
+    recorded?: Date;
 }
 
 export type Widget = {

@@ -267,6 +267,10 @@ b {
     text-overflow: ellipsis;
     width: 90%;
     margin: 0 0 0 auto;
+
+    img {
+        width: auto;
+    }
 }
 
 /* button#clear {

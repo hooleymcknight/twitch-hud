@@ -7,16 +7,18 @@ const CHANNEL_NAME = 'hollyngrade';
 const SUS_MSG_STRINGS = [
     'ai viewers',
     ' . com',
-    '.com'
+    // '.com'
 ]
 const ding = new Audio('/twitchHudDing.mp3');
-let msgTimeout: number | null;
 
 function Chat({ clickThrough, id, show, fullChatDisplay, updateShowSettings, updateChatDisplay } : { clickThrough: boolean, id: string, show: boolean, fullChatDisplay: boolean, updateShowSettings: (showing: boolean, id: string) => void, updateChatDisplay: (fullDisplay: boolean, id: string) => void }) {
     const [mostRecentMsgs, setMostRecentMsgs] = useState<Array<MessageObj>>([]);
-    const [showing, setShowing] = useState<boolean>(show);
-    const lastDing = useRef<Date|null>(null);
     const [fullChat, setFullChat] = useState<boolean>(fullChatDisplay);
+    const [showing, setShowing] = useState<boolean>(show);
+    const [popupState, setPopupState] = useState<Array<MessageObj>>([]);
+
+    const lastDing = useRef<Date|null>(null);
+    const popupMsgs = useRef<Array<MessageObj>>([]);
 
     const onShowHide = () => {
         updateShowSettings(showing, id);
@@ -146,7 +148,6 @@ function Chat({ clickThrough, id, show, fullChatDisplay, updateShowSettings, upd
                                 // if text, just add to it. 
                                 // if emoji, just keep goin.
                                 
-                                console.log('most recent piece', mostRecentPiece);
                                 if (mostRecentPiece?.type === 'text') {
                                     mostRecentPiece.content += char;
                                 }
@@ -156,26 +157,38 @@ function Chat({ clickThrough, id, show, fullChatDisplay, updateShowSettings, upd
                             }
                         });
 
-                        console.log(messagePieces);
                         msgObj.messagePieces = messagePieces;
                     }
                     else {
                         msgObj.message = message;
                     }
 
-                    console.log(msgObj);
-
                     document.querySelector('.chat-popup .twitch-chat')?.classList.remove('fading');
-                    if (msgTimeout) clearTimeout(msgTimeout);
                     
                     playDing();
-                    if (!fullChat) {
-                        const time = message.length % 15;
-                        msgTimeout = setTimeout(() => {
-                            document.querySelector('.chat-popup .twitch-chat')?.classList.add('fading');
-                        }, time ? time * 2000 : 2000);
-                    }
+
+                    const now = new Date();
+                    const prevMsgObj = popupMsgs.current[popupMsgs.current.length - 1];
+                    const previousDelay = prevMsgObj?.delay || 0;
+                    const prevRecorded = prevMsgObj?.recorded || now;
+                    
+                    popupMsgs.current = [...popupMsgs.current, msgObj];
+                    setPopupState(prev => [...prev, msgObj]);
                     setMostRecentMsgs(prev => [...prev, msgObj]);
+
+                    if (!fullChat) {
+                        const delay: number = Math.min(2000 + message.length * 60, 10000) + Math.max(0, previousDelay - (Number(now) - Number(prevRecorded)));
+                        msgObj.delay = delay;
+                        msgObj.recorded = now;
+                        
+                        setTimeout(() => {
+                            if (popupMsgs.current.length <= 1) {
+                                document.querySelector('.chat-popup .twitch-chat')?.classList.add('fading');
+                            }
+                            popupMsgs.current = popupMsgs.current.filter((x: MessageObj) => x !== msgObj);
+                            setPopupState(prev => prev.filter((x: MessageObj) => x !== msgObj));
+                        }, delay);
+                    }
                 }
 
                 // user ban
@@ -260,16 +273,18 @@ function Chat({ clickThrough, id, show, fullChatDisplay, updateShowSettings, upd
             <div className="chat-popup">
                 <div className={`twitch-chat ${show ? '' : 'invisible'} ${fullChat ? 'hidden' : ''} ${mostRecentMsgs.length ? '' : 'hidden'} `}>
                     <div className="chat-rows">
-                        { mostRecentMsgs.length ? 
-                            <div className="row">
-                                <b>{mostRecentMsgs[mostRecentMsgs.length - 1].author}</b>
-                                {/* <p>{mostRecentMsgs[mostRecentMsgs.length - 1].message}</p> */}
-                                {
-                                    mostRecentMsgs[mostRecentMsgs.length - 1].message ? <ChatMessage key={mostRecentMsgs[mostRecentMsgs.length - 1].message} message={mostRecentMsgs[mostRecentMsgs.length - 1].message} />
-                                    : <ChatMessage key={mostRecentMsgs[mostRecentMsgs.length - 1].author} messagePieces={mostRecentMsgs[mostRecentMsgs.length - 1].messagePieces} />
+
+                        { popupState.map((msg: MessageObj, idx: number) =>
+                            <div key={idx} className="row">
+                                <b>{msg.author}</b>
+                                { msg.message ? 
+                                    <ChatMessage key={idx} message={msg.message} />
+                                :
+                                    <ChatMessage key={idx} messagePieces={msg.messagePieces} />
                                 }
                             </div>
-                        : null }
+                        )}
+                        
                     </div>
                 </div>
             </div>
