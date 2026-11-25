@@ -3,7 +3,7 @@ import { MessageObj, Emote, MsgText } from "../interface";
 import Draggable from "../components/Draggable";
 import ChatMessage from "../components/ChatMessage";
 
-const CHANNEL_NAME = 'hollyngrade';
+const CHANNEL_NAME = 'faefolk11';
 const SUS_MSG_STRINGS = [
     'ai viewers',
     ' . com',
